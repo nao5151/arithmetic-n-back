@@ -20,6 +20,7 @@ export const Game = () => {
   const { settings } = useSettings();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const panelRef = useRef<HTMLElement | null>(null);
+  const isLowTime = phase === 'play' && remainingTime <= 10;
 
   useEffect(() => {
     if (phase === 'warmup' || phase === 'play') {
@@ -60,7 +61,7 @@ export const Game = () => {
               </div>
             )}
           </div>
-          <span className="timer strong">
+          <span className={`timer strong ${isLowTime ? 'is-low' : ''}`}>
             残り <span className="timer-number">{remainingTime}</span> 秒
           </span>
         </div>
