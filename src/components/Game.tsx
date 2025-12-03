@@ -26,12 +26,6 @@ export const Game = () => {
     if (phase === 'warmup' || phase === 'play') {
       const id = window.setTimeout(() => {
         inputRef.current?.focus({ preventScroll: true });
-        window.requestAnimationFrame(() => {
-          panelRef.current?.scrollIntoView({
-            block: 'start',
-            behavior: 'smooth',
-          });
-        });
       }, 120);
       return () => window.clearTimeout(id);
     }
