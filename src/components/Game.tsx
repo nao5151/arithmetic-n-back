@@ -19,10 +19,19 @@ export const Game = () => {
   } = useGame();
   const { settings } = useSettings();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const panelRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (phase === 'warmup' || phase === 'play') {
-      const id = window.setTimeout(() => inputRef.current?.focus(), 120);
+      const id = window.setTimeout(() => {
+        inputRef.current?.focus({ preventScroll: true });
+        window.requestAnimationFrame(() => {
+          panelRef.current?.scrollIntoView({
+            block: 'start',
+            behavior: 'smooth',
+          });
+        });
+      }, 120);
       return () => window.clearTimeout(id);
     }
     return undefined;
@@ -32,7 +41,7 @@ export const Game = () => {
 
   return (
     <>
-      <section className="panel">
+      <section className="panel" ref={panelRef}>
         <div className="info-row">
           <div className="turn-indicator">
             <span className="turn-number">{turnNumber}問目</span>
