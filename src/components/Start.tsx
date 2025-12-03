@@ -1,7 +1,10 @@
-import { useGame } from '../contexts/GameContext';
 import { useSettings } from '../contexts/SettingsContext';
+import { useGame } from '../contexts/GameContext';
 
-const DURATIONS = [30, 60];
+const DURATIONS = [30, 60, 120, 180];
+
+const formatDuration = (sec: number) =>
+  sec % 60 === 0 ? `${sec / 60}分` : `${sec}秒`;
 
 export const Start = () => {
   const { settings, updateSettings } = useSettings();
@@ -46,7 +49,7 @@ export const Start = () => {
                   }
                   onClick={() => updateSettings({ durationSec: sec })}
                 >
-                  {`${sec}秒`}
+                  {formatDuration(sec)}
                 </button>
               ))}
             </div>
@@ -67,7 +70,7 @@ export const Start = () => {
             {history.map((item) => (
               <div key={item.playedAt} className="history-row">
                 <span>{item.nBack}</span>
-                <span>{`${item.durationSec}秒`}</span>
+                <span>{formatDuration(item.durationSec)}</span>
                 <span>{item.correct}</span>
                 <span>{item.accuracy}%</span>
               </div>
